@@ -42,11 +42,11 @@ Follow these simple steps to start using **Flutter Builder Toolkit**.
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YourUsername/FlutterBuilderToolkit.git
+   git clone https://github.com/MohammadTaghipour/flutter_builder.git
 
 2. Navigate to the project folder:
    ```bash
-   cd FlutterBuilderToolkit
+   cd flutter_builder
 
 3. Install the required dependencies:
    ```bash
