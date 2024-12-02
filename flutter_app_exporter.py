@@ -139,6 +139,14 @@ def show_owner_info():
     print(logo)
 
 
+async def get_supported_android_devices(project_location):
+    app_build_version = await find_file_in_directory(project_location, 'app_build_setting.dart')
+    if app_build_version == None:
+        return ['Mobile']
+    else:
+        return ['Mobile, ', 'POS']
+
+
 async def get_supported_plaltforms(project_location):
     path = Path(project_location)
     supported_platforms = []
@@ -218,14 +226,14 @@ async def main():
                 print('Enter values for release')
                 print('--- Press Enter for skip ---')
                 version_name = input('New version (eg. 1.0.0+1): ')
-                version_name = version_name if version_name is None else current_version
+                version_name = current_version if version_name is None else version_name
                 package_name = input('New package name: ')
                 supported_platforms = await get_supported_plaltforms(project_location)
-                supported_devices = ['POS, ', 'Mobile']
+                supported_devices = await get_supported_android_devices(project_location)
                 supported_platforms = [item if index == len(supported_platforms) -1 else  item + ', ' for index,item in enumerate(supported_platforms)]
                 target_os = input('Choose release os ({}): '.format(''.join(supported_platforms)))
                 target_android_device = 'Mobile'
-                if target_os.lower() == 'android':
+                if target_os.lower() == 'android' and len(supported_devices) > 1:
                     target_android_device = input('Choose target device ({}): '.format(''.join(supported_devices)))
                 print('-'*50)
                 await change_app_version(version_name, target_os, target_android_device, project_location)
